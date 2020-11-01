@@ -1,5 +1,5 @@
 // iteration
-// a node is visited only when it is popped from the stack and it has no right child
+// a node is visited only when it is popped from the stack and it has no right child in the stack
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
