@@ -1,33 +1,23 @@
 // use hashmap and sliding window
 class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
-        Map<Character, Integer> map = new HashMap<>();
         int start = 0;
         int max = 0;
+        Map<Character, Integer> map = new HashMap<>();
         
         for (int end = 0; end < s.length(); end++) {
             char c = s.charAt(end);
-            if (map.keySet().contains(c)) {
-                map.put(c, map.get(c) + 1);
-            } else {
-                map.put(c, 1);
+            map.put(c, map.getOrDefault(c, 0) + 1);
+            
+            while (map.size() > k) {
+                c = s.charAt(start);
+                int count = map.get(s.charAt(start));
+                if (count == 1) map.remove(c);
+                else map.put(c, count - 1);
+                start++;
             }
             
-            int size = map.keySet().size();
-            if (size <= k) max = Math.max(max, end - start + 1);
-            else {
-                while (size > k) {
-                    c = s.charAt(start);
-                    if (map.get(c) == 1) {
-                        map.remove(c);
-                        size--;
-                    }
-                    else {
-                        map.put(c, map.get(c) - 1);
-                    }
-                    start++;
-                }
-            }
+            max = Math.max(max, end - start + 1);
         }
         
         return max;
